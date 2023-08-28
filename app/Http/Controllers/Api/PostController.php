@@ -20,7 +20,7 @@ class PostController extends Controller
 
     public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        $posts = Post::paginate(5);
+        $posts = Post::paginate(10);
         return PostResource::collection($posts);
     }
 
