@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
@@ -51,8 +49,17 @@ class PostController extends Controller
         if (Gate::allows('is_editor') || Gate::allows('is_admin')) {
             // Tylko editor lub admin ma dostęp do edycji posta
             $post->update($request->all());
-
             return response()->json(['message' => 'Post updated']);
+        }
+        return abort(403, 'Bad permission');
+    }
+
+    public function destroy(Post $post): \Illuminate\Http\JsonResponse
+    {
+        if (Gate::allows('is_editor') || Gate::allows('is_admin')) {
+            // Tylko editor lub admin może usunąć post
+            $post->delete();
+            return response()->json(['message' => 'Post deleted'], 200);
         }
         return abort(403, 'Bad permission');
     }

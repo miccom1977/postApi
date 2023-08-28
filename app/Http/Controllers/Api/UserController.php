@@ -37,8 +37,17 @@ class UserController extends Controller
         if (Gate::allows('is_admin')) {
             // Tylko admin ma dostęp do edycji usera
             $user->update($request->all());
-
             return response()->json(['message' => 'User updated']);
+        }
+        return abort(403, 'Bad permission');
+    }
+
+    public function destroy(User $user): \Illuminate\Http\JsonResponse
+    {
+        if (Gate::allows('is_admin')) {
+            // Tylko admin ma dostęp do usunięcia usera
+            $user->delete();
+            return response()->json(['message' => 'User deleted'], 200);
         }
         return abort(403, 'Bad permission');
     }

@@ -40,7 +40,7 @@ class PostRequest extends FormRequest
             return $updateRules;
         }
 
-        // W przeciwnym razie, zwróć puste reguły
+        // W przeciwnym razie zwróć puste reguły
         return [];
     }
 }

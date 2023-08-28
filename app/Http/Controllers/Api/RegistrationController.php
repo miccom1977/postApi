@@ -7,7 +7,6 @@ use App\Http\Requests\UserRegistrationRequest;
 use App\Http\Resources\UserResource;
 use App\Jobs\SendRegistrationEmail;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,7 +17,7 @@ class RegistrationController extends Controller
         $this->middleware('auth:sanctum');
     }
 
-    protected function create(UserRegistrationRequest $request)
+    protected function create(UserRegistrationRequest $request): UserResource
     {
         if (Gate::allows('is_admin')) {
             // Tworzenie nowego użytkownika w bazie danych na podstawie danych z żądania
